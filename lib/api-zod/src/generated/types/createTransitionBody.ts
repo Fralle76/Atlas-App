@@ -5,19 +5,6 @@
  * API specification for Atlas caregiver support tool
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
-
-export interface Transition {
-  id: number;
-  childName: string;
-  fromActivity: string;
-  toActivity: string;
-  warningMinutes: number;
-  notes?: string;
-  createdAt: string;
-}
 
 export interface CreateTransitionBody {
   childName: string;

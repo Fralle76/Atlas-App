@@ -1,15 +1,16 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API specification for Atlas caregiver support tool
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: transitions
+    description: Transition plan operations
 paths:
   /healthz:
     get:
@@ -24,6 +25,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /transitions:
+    get:
+      operationId: listTransitions
+      tags: [transitions]
+      summary: List saved transitions
+      responses:
+        "200":
+          description: List of transitions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transition"
+    post:
+      operationId: createTransition
+      tags: [transitions]
+      summary: Save a transition plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTransitionBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transition"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +65,46 @@ components:
           type: string
       required:
         - status
-
+    Transition:
+      type: object
+      properties:
+        id:
+          type: integer
+        childName:
+          type: string
+        fromActivity:
+          type: string
+        toActivity:
+          type: string
+        warningMinutes:
+          type: integer
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - childName
+        - fromActivity
+        - toActivity
+        - warningMinutes
+        - createdAt
+    CreateTransitionBody:
+      type: object
+      properties:
+        childName:
+          type: string
+        fromActivity:
+          type: string
+        toActivity:
+          type: string
+        warningMinutes:
+          type: integer
+        notes:
+          type: string
+      required:
+        - childName
+        - fromActivity
+        - toActivity
+        - warningMinutes

@@ -1,0 +1,10 @@
+packages:
+  "framer-motion": "For soft, calming animations and page transitions"
+  "react-hook-form": "For form state management"
+  "@hookform/resolvers": "For zod validation integration"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility for merging tailwind classes without style conflicts"
+
+notes:
+  - Frontend is entirely light mode with two custom theme variants: Calm (default) and Crisis.
+  - Using generated hooks from @workspace/api-client-react.
