@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowLeft, ArrowRightLeft, Clock, Save, Activity, AlignLeft, User } from "lucide-react";
+import { AtlasLogoMark } from "@/components/AtlasLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -74,13 +75,16 @@ export default function Prepare() {
 
   return (
     <div className="min-h-screen w-full px-6 py-8 sm:px-8 max-w-md mx-auto relative">
-      <header className="flex items-center mb-8 relative z-10">
-        <Link href="/">
-          <Button variant="ghost" size="icon" className="mr-4 bg-white/50 border border-border shadow-sm">
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-        </Link>
-        <h1 className="text-2xl font-display font-bold text-foreground">Prepare Transition</h1>
+      <header className="flex items-center justify-between mb-8 relative z-10">
+        <div className="flex items-center">
+          <Link href="/">
+            <Button variant="ghost" size="icon" className="mr-4 bg-white/50 border border-border shadow-sm">
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+          </Link>
+          <h1 className="text-2xl font-display font-bold text-foreground">Prepare Transition</h1>
+        </div>
+        <AtlasLogoMark size={32} className="opacity-70" />
       </header>
 
       <motion.form 

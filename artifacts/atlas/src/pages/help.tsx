@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Wind, Heart, Clock, MessageCircle, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMode } from "@/lib/mode-context";
+import { AtlasLogoMark } from "@/components/AtlasLogo";
 
 const tips = [
   {
@@ -33,13 +34,16 @@ export default function Help() {
 
   return (
     <div className="min-h-screen w-full px-6 py-8 sm:px-8 max-w-lg mx-auto relative bg-background">
-      <header className="flex items-center mb-8 relative z-10">
-        <Link href="/">
-          <Button variant="ghost" size="icon" className="mr-4 bg-white/50 border border-border shadow-sm">
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-        </Link>
-        <h1 className="text-2xl font-display font-bold text-foreground">Transition Help</h1>
+      <header className="flex items-center justify-between mb-8 relative z-10">
+        <div className="flex items-center">
+          <Link href="/">
+            <Button variant="ghost" size="icon" className="mr-4 bg-white/50 border border-border shadow-sm">
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+          </Link>
+          <h1 className="text-2xl font-display font-bold text-foreground">Transition Help</h1>
+        </div>
+        <AtlasLogoMark size={32} className="opacity-70" />
       </header>
 
       <div className="space-y-6">

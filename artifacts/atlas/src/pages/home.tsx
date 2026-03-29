@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useMode } from "@/lib/mode-context";
 import { ArrowRightLeft, LifeBuoy, Moon, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AtlasLogoMark } from "@/components/AtlasLogo";
 
 export default function Home() {
   const { mode, toggleMode } = useMode();
@@ -18,10 +19,13 @@ export default function Home() {
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="flex flex-col"
+          className="flex items-center gap-3"
         >
-          <h1 className="text-4xl font-display font-bold text-foreground">Atlas</h1>
-          <p className="text-muted-foreground text-sm mt-1">Caregiver Support</p>
+          <AtlasLogoMark size={48} />
+          <div className="flex flex-col">
+            <h1 className="text-3xl font-display font-bold text-foreground leading-none">Atlas</h1>
+            <p className="text-muted-foreground text-xs mt-1">Caregiver Support</p>
+          </div>
         </motion.div>
 
         <motion.button
