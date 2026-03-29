@@ -1,7 +1,7 @@
 import { Link } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useMode } from "@/lib/mode-context";
-import { ArrowRightLeft, LifeBuoy, Moon, AlertTriangle } from "lucide-react";
+import { ArrowRightLeft, LifeBuoy, MessageSquare, Leaf, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AtlasLogoMark } from "@/components/AtlasLogo";
 
@@ -11,95 +11,141 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full flex flex-col px-6 py-8 sm:px-8 max-w-lg mx-auto relative overflow-hidden">
-      {/* Soft background decorative elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[80px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-accent/30 blur-[100px] pointer-events-none" />
+      {/* Soft background blobs */}
+      <div className="absolute top-[-8%] left-[-8%] w-[55%] h-[55%] rounded-full bg-primary/8 blur-[90px] pointer-events-none" />
+      <div className="absolute bottom-[-8%] right-[-8%] w-[55%] h-[55%] rounded-full bg-accent/40 blur-[90px] pointer-events-none" />
 
-      <header className="w-full flex justify-between items-center mb-16 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-3"
-        >
-          <AtlasLogoMark size={48} />
-          <div className="flex flex-col">
-            <h1 className="text-3xl font-display font-bold text-foreground leading-none">Atlas</h1>
-            <p className="text-muted-foreground text-xs mt-1">Caregiver Support</p>
-          </div>
-        </motion.div>
+      {/* Header — logo only */}
+      <motion.header
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full flex items-center gap-3 mb-8 relative z-10"
+      >
+        <AtlasLogoMark size={44} />
+        <div>
+          <h1 className="text-2xl font-display font-bold text-foreground leading-none">Atlas</h1>
+          <p className="text-muted-foreground text-xs mt-0.5">Caregiver Support</p>
+        </div>
+      </motion.header>
 
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          onClick={toggleMode}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm transition-all duration-300 shadow-sm
-            ${isCrisis 
-              ? 'bg-primary/10 text-primary border border-primary/20' 
-              : 'bg-white border border-border text-muted-foreground hover:bg-secondary'
-            }`}
-        >
+      {/* Central mode toggle */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="w-full mb-10 relative z-10"
+      >
+        <div className="flex items-center bg-secondary rounded-2xl p-1 gap-1 shadow-inner">
+          <button
+            onClick={() => !isCrisis ? null : toggleMode()}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-300
+              ${!isCrisis
+                ? "bg-white text-foreground shadow-sm shadow-black/5"
+                : "text-muted-foreground hover:text-foreground"
+              }`}
+          >
+            <Leaf className="w-4 h-4" />
+            Calm Mode
+          </button>
+          <button
+            onClick={() => isCrisis ? null : toggleMode()}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-300
+              ${isCrisis
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+              }`}
+          >
+            <AlertTriangle className="w-4 h-4" />
+            Crisis Mode
+          </button>
+        </div>
+      </motion.div>
+
+      {/* Main content area */}
+      <main className="flex-1 flex flex-col justify-center gap-5 relative z-10 w-full">
+        <AnimatePresence mode="wait">
           {isCrisis ? (
-            <>
-              <AlertTriangle className="w-4 h-4" />
-              <span>Crisis Mode</span>
-            </>
-          ) : (
-            <>
-              <Moon className="w-4 h-4" />
-              <span>Calm Mode</span>
-            </>
-          )}
-        </motion.button>
-      </header>
-
-      <main className="flex-1 flex flex-col justify-center gap-6 relative z-10 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-center mb-6"
-        >
-          <h2 className={`text-2xl sm:text-3xl font-display font-bold mb-3 ${isCrisis ? 'text-primary' : 'text-foreground'}`}>
-            {isCrisis ? "We are here. You can do this." : "Ready for the next step?"}
-          </h2>
-          <p className="text-muted-foreground">
-            {isCrisis 
-              ? "Focus on breathing. Access immediate tips or plan the next move."
-              : "Prepare your child for an upcoming activity change to reduce stress."}
-          </p>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="w-full"
-        >
-          <Link href="/prepare" className="w-full block">
-            <Button size="xl" className="w-full text-lg shadow-xl shadow-primary/20 group">
-              <ArrowRightLeft className="w-6 h-6 mr-2 group-hover:rotate-12 transition-transform" />
-              Prepare for Transition
-            </Button>
-          </Link>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="w-full"
-        >
-          <Link href="/help" className="w-full block">
-            <Button 
-              size="xl" 
-              variant="outline" 
-              className={`w-full text-lg bg-card border-2 ${isCrisis ? 'border-primary/40 text-primary' : 'border-border text-foreground hover:border-primary/30'}`}
+            /* ── CRISIS MODE: single big button, minimal text ── */
+            <motion.div
+              key="crisis"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.25 }}
+              className="flex flex-col items-center gap-6 text-center"
             >
-              <LifeBuoy className="w-6 h-6 mr-2" />
-              Transition Help & Tips
-            </Button>
-          </Link>
-        </motion.div>
+              <div>
+                <h2 className="text-2xl font-display font-bold text-foreground mb-2">
+                  You've got this.
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Take a breath. Help is right here.
+                </p>
+              </div>
+
+              <Link href="/help" className="w-full block">
+                <Button
+                  size="xl"
+                  className="w-full py-8 text-xl shadow-lg shadow-primary/20"
+                >
+                  <LifeBuoy className="w-7 h-7 mr-3" />
+                  Transition Help & Tips
+                </Button>
+              </Link>
+            </motion.div>
+          ) : (
+            /* ── CALM MODE: full three-button layout ── */
+            <motion.div
+              key="calm"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.25 }}
+              className="flex flex-col gap-5"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 }}
+                className="text-center mb-2"
+              >
+                <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-2">
+                  Atlas is here to support you.
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Choose where you'd like to start.
+                </p>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                <Link href="/prepare" className="w-full block">
+                  <Button size="xl" className="w-full text-base shadow-md shadow-primary/15 group">
+                    <ArrowRightLeft className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
+                    Prepare for Transition
+                  </Button>
+                </Link>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+                <Link href="/help" className="w-full block">
+                  <Button size="xl" variant="outline" className="w-full text-base border-2 border-border bg-card hover:border-primary/40">
+                    <LifeBuoy className="w-5 h-5 mr-2" />
+                    Transition Help & Tips
+                  </Button>
+                </Link>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                <Link href="/practice" className="w-full block">
+                  <Button size="xl" variant="outline" className="w-full text-base border-2 border-border bg-card hover:border-primary/40">
+                    <MessageSquare className="w-5 h-5 mr-2" />
+                    Practice a Phrase
+                  </Button>
+                </Link>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );

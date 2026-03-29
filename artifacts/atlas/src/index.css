@@ -48,33 +48,33 @@
 }
 
 :root {
-  /* Calm Mode (Default) - Soft Blues and Lavenders */
-  --background: 210 40% 98%;
-  --foreground: 220 30% 20%;
+  /* Calm Mode (Default) - Warm Sage Green */
+  --background: 120 18% 97%;
+  --foreground: 140 25% 18%;
   
-  --border: 214 30% 92%;
-  --input: 214 30% 92%;
-  --ring: 230 60% 65%;
+  --border: 130 20% 88%;
+  --input: 130 20% 88%;
+  --ring: 145 38% 46%;
   
   --card: 0 0% 100%;
-  --card-foreground: 220 30% 20%;
-  --card-border: 214 30% 92%;
+  --card-foreground: 140 25% 18%;
+  --card-border: 130 20% 90%;
   
   --popover: 0 0% 100%;
-  --popover-foreground: 220 30% 20%;
-  --popover-border: 214 30% 92%;
+  --popover-foreground: 140 25% 18%;
+  --popover-border: 130 20% 90%;
   
-  --primary: 230 60% 65%;
+  --primary: 145 38% 44%;
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 210 30% 94%;
-  --secondary-foreground: 220 30% 20%;
+  --secondary: 130 22% 93%;
+  --secondary-foreground: 140 25% 22%;
   
-  --muted: 210 20% 94%;
-  --muted-foreground: 220 15% 45%;
+  --muted: 120 15% 93%;
+  --muted-foreground: 140 12% 46%;
   
-  --accent: 250 50% 90%;
-  --accent-foreground: 250 50% 30%;
+  --accent: 140 28% 88%;
+  --accent-foreground: 145 38% 24%;
   
   --destructive: 0 70% 60%;
   --destructive-foreground: 0 0% 100%;
@@ -88,33 +88,33 @@
 }
 
 .theme-crisis {
-  /* Crisis Mode - Warm Ambers and Oranges */
-  --background: 40 30% 96%;
-  --foreground: 20 40% 15%;
+  /* Crisis Mode - Deep Sage with warm grounding tones */
+  --background: 120 18% 97%;
+  --foreground: 140 25% 18%;
   
-  --border: 35 25% 85%;
-  --input: 35 25% 85%;
-  --ring: 25 85% 55%;
+  --border: 130 20% 88%;
+  --input: 130 20% 88%;
+  --ring: 145 38% 44%;
   
   --card: 0 0% 100%;
-  --card-foreground: 20 40% 15%;
-  --card-border: 35 25% 85%;
+  --card-foreground: 140 25% 18%;
+  --card-border: 130 20% 90%;
   
   --popover: 0 0% 100%;
-  --popover-foreground: 20 40% 15%;
-  --popover-border: 35 25% 85%;
+  --popover-foreground: 140 25% 18%;
+  --popover-border: 130 20% 90%;
   
-  --primary: 25 85% 55%;
+  --primary: 145 38% 38%;
   --primary-foreground: 0 0% 100%;
   
-  --secondary: 35 40% 90%;
-  --secondary-foreground: 20 40% 15%;
+  --secondary: 130 22% 93%;
+  --secondary-foreground: 140 25% 22%;
   
-  --muted: 40 20% 90%;
-  --muted-foreground: 20 20% 40%;
+  --muted: 120 15% 93%;
+  --muted-foreground: 140 12% 46%;
   
-  --accent: 30 70% 90%;
-  --accent-foreground: 30 70% 30%;
+  --accent: 140 28% 88%;
+  --accent-foreground: 145 38% 24%;
   
   --destructive: 0 70% 60%;
   --destructive-foreground: 0 0% 100%;
