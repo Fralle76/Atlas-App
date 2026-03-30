@@ -1,4 +1,4 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, Redirect } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,13 +9,20 @@ import Home from "@/pages/home";
 import Prepare from "@/pages/prepare";
 import Help from "@/pages/help";
 import Practice from "@/pages/practice";
+import Onboarding, { hasCompletedOnboarding } from "@/pages/onboarding";
 
 const queryClient = new QueryClient();
 
 function Router() {
+  const onboarded = hasCompletedOnboarding();
+
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      {/* Redirect root to onboarding if first visit */}
+      <Route path="/">
+        {onboarded ? <Home /> : <Redirect to="/onboarding" />}
+      </Route>
+      <Route path="/onboarding" component={Onboarding} />
       <Route path="/prepare" component={Prepare} />
       <Route path="/help" component={Help} />
       <Route path="/practice" component={Practice} />
