@@ -23,7 +23,7 @@ export default function Home() {
       >
         <AtlasLogoMark size={44} />
         <div>
-          <h1 className="text-2xl font-display font-bold text-foreground leading-none">Atlas</h1>
+          <h1 className="text-2xl font-bold text-foreground leading-none" style={{ fontFamily: "'Rajdhani', sans-serif" }}>Atlas</h1>
           <p className="text-muted-foreground text-xs mt-0.5">Caregiver Support</p>
         </div>
       </motion.header>
