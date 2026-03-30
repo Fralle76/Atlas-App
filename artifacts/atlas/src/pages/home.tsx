@@ -113,7 +113,7 @@ export default function Home() {
                   Atlas is here to support you.
                 </h2>
                 <p className="text-muted-foreground text-sm">
-                  Choose where you'd like to start.
+                  You're not alone in this.
                 </p>
               </motion.div>
 
