@@ -65,31 +65,35 @@ export default function Home() {
       <main className="flex-1 flex flex-col justify-center gap-5 relative z-10 w-full">
         <AnimatePresence mode="wait">
           {isCrisis ? (
-            /* ── CRISIS MODE: single big button, minimal text ── */
+            /* ── CRISIS MODE: single enlarged Transition Help button, calm sage banner ── */
             <motion.div
               key="crisis"
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.25 }}
-              className="flex flex-col items-center gap-6 text-center"
+              className="flex flex-col items-center justify-center gap-8 text-center min-h-[55vh] w-full"
             >
-              <div>
-                <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-                  You've got this.
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  Take a breath. Help is right here.
+              {/* Calm sage green banner */}
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 }}
+                className="bg-primary/10 border border-primary/20 rounded-2xl px-6 py-5 w-full"
+              >
+                <p className="font-rajdhani text-xl text-primary leading-snug">
+                  You've got this.<br />One step at a time.
                 </p>
-              </div>
+              </motion.div>
 
+              {/* Single enlarged centered button */}
               <Link href="/help" className="w-full block">
                 <Button
                   size="xl"
-                  className="w-full py-8 text-xl shadow-lg shadow-primary/20"
+                  className="w-full py-12 text-2xl shadow-xl shadow-primary/25 rounded-3xl"
                 >
-                  <LifeBuoy className="w-7 h-7 mr-3" />
-                  Transition Help & Tips
+                  <LifeBuoy className="w-8 h-8 mr-3" />
+                  Transition Help
                 </Button>
               </Link>
             </motion.div>

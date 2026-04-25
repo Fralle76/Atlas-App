@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Mode = 'calm' | 'crisis';
 
+const MODE_KEY = 'atlas_mode';
+
 interface ModeContextType {
   mode: Mode;
   setMode: (mode: Mode) => void;
@@ -14,20 +16,35 @@ const ModeContext = createContext<ModeContextType>({
   toggleMode: () => {},
 });
 
+function loadInitialMode(): Mode {
+  if (typeof window === 'undefined') return 'calm';
+  try {
+    const raw = localStorage.getItem(MODE_KEY);
+    return raw === 'crisis' ? 'crisis' : 'calm';
+  } catch {
+    return 'calm';
+  }
+}
+
 export const ModeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mode, setMode] = useState<Mode>('calm');
+  const [mode, setModeState] = useState<Mode>(loadInitialMode);
 
   useEffect(() => {
-    // Apply the theme class to the body for global styling
     if (mode === 'crisis') {
       document.body.classList.add('theme-crisis');
     } else {
       document.body.classList.remove('theme-crisis');
     }
+    try {
+      localStorage.setItem(MODE_KEY, mode);
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [mode]);
 
+  const setMode = (m: Mode) => setModeState(m);
   const toggleMode = () => {
-    setMode((prev) => (prev === 'calm' ? 'crisis' : 'calm'));
+    setModeState((prev) => (prev === 'calm' ? 'crisis' : 'calm'));
   };
 
   return (
