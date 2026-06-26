@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMode } from "@/lib/mode-context";
-import { ArrowRightLeft, LifeBuoy, MessageSquare, Leaf, AlertTriangle, HelpCircle } from "lucide-react";
+import { ArrowRightLeft, LifeBuoy, MessageSquare, Leaf, AlertTriangle, HelpCircle, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AtlasLogoMark } from "@/components/AtlasLogo";
 import { AskAtlas } from "@/components/AskAtlas";
@@ -167,6 +167,15 @@ export default function Home() {
                   <Button size="xl" variant="outline" className="w-full text-base border-2 border-border bg-card hover:border-primary/40">
                     <MessageSquare className="w-5 h-5 mr-2" />
                     Practice a Phrase
+                  </Button>
+                </Link>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                <Link href="/schedule" className="w-full block">
+                  <Button size="xl" variant="outline" className="w-full text-base border-2 border-border bg-card hover:border-primary/40">
+                    <CalendarDays className="w-5 h-5 mr-2" />
+                    Visual Schedule
                   </Button>
                 </Link>
               </motion.div>
