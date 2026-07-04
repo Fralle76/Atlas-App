@@ -13,6 +13,28 @@ function generateId() {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 }
 
+function compressImage(file: File, maxPx = 900, quality = 0.82): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+      if (width > maxPx || height > maxPx) {
+        if (width > height) { height = Math.round((height * maxPx) / width); width = maxPx; }
+        else { width = Math.round((width * maxPx) / height); height = maxPx; }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext("2d")!.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
 function StepCard({
   step,
   index,
@@ -31,13 +53,16 @@ function StepCard({
   const fileRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
 
-  function handleFile(file: File) {
+  async function handleFile(file: File) {
     if (!file.type.startsWith("image/")) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      onChange({ ...step, imageDataUrl: e.target?.result as string });
-    };
-    reader.readAsDataURL(file);
+    try {
+      const dataUrl = await compressImage(file);
+      onChange({ ...step, imageDataUrl: dataUrl });
+    } catch {
+      const reader = new FileReader();
+      reader.onload = (e) => onChange({ ...step, imageDataUrl: e.target?.result as string });
+      reader.readAsDataURL(file);
+    }
   }
 
   function onDrop(e: React.DragEvent) {
@@ -182,6 +207,7 @@ export default function ScheduleEdit() {
   const [steps, setSteps] = useState<ScheduleStep[]>([]);
   const [saved, setSaved] = useState(false);
   const [nameError, setNameError] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isNew && params.id) {
@@ -223,26 +249,32 @@ export default function ScheduleEdit() {
       return;
     }
     setNameError(false);
-    const all = loadSchedules();
-    const validSteps = steps.filter((s) => s.title.trim() || s.imageDataUrl);
+    setSaveError(null);
 
-    if (isNew) {
-      const newSched: Schedule = {
-        id: generateId(),
-        name: name.trim(),
-        steps: validSteps,
-        createdAt: new Date().toISOString(),
-      };
-      saveSchedules([...all, newSched]);
-    } else {
-      const updated = all.map((s) =>
-        s.id === params.id ? { ...s, name: name.trim(), steps: validSteps } : s
-      );
-      saveSchedules(updated);
+    try {
+      const all = loadSchedules();
+      const validSteps = steps.filter((s) => s.title.trim() || s.imageDataUrl);
+
+      if (isNew) {
+        const newSched: Schedule = {
+          id: generateId(),
+          name: name.trim(),
+          steps: validSteps,
+          createdAt: new Date().toISOString(),
+        };
+        saveSchedules([...all, newSched]);
+      } else {
+        const updated = all.map((s) =>
+          s.id === params.id ? { ...s, name: name.trim(), steps: validSteps } : s
+        );
+        saveSchedules(updated);
+      }
+
+      setSaved(true);
+      setTimeout(() => nav("/schedule"), 800);
+    } catch (err) {
+      setSaveError("Couldn't save — photos may be too large. Try using smaller images.");
     }
-
-    setSaved(true);
-    setTimeout(() => nav("/schedule"), 800);
   }
 
   return (
@@ -320,6 +352,9 @@ export default function ScheduleEdit() {
 
       {/* Sticky save button */}
       <div className="fixed bottom-0 left-0 right-0 max-w-lg mx-auto px-6 py-4 bg-background/90 backdrop-blur border-t border-border z-20">
+        {saveError && (
+          <p className="text-xs text-red-500 text-center mb-2">{saveError}</p>
+        )}
         <Button
           size="xl"
           className="w-full shadow-lg shadow-primary/20"
