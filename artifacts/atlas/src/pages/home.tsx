@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMode } from "@/lib/mode-context";
-import { ArrowRightLeft, LifeBuoy, MessageSquare, Leaf, AlertTriangle, HelpCircle, CalendarDays } from "lucide-react";
+import { ArrowRightLeft, LifeBuoy, MessageSquare, Leaf, AlertTriangle, CalendarDays, BookOpen, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AtlasLogoMark } from "@/components/AtlasLogo";
 import { AskAtlas } from "@/components/AskAtlas";
@@ -74,9 +74,9 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.25 }}
-              className="flex flex-col items-center gap-7 text-center w-full pt-4"
+              className="flex flex-col items-center gap-5 text-center w-full pt-2"
             >
-              {/* Calm sage banner */}
+              {/* Calm banner */}
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -88,37 +88,36 @@ export default function Home() {
                 </p>
               </motion.div>
 
-              {/* Single big button */}
-              <Link href="/help" className="w-full block">
+              {/* Primary CTA */}
+              <Link href="/crisis" className="w-full block">
                 <Button
                   size="xl"
-                  className="w-full py-12 text-2xl shadow-xl shadow-primary/25 rounded-3xl"
+                  className="w-full py-10 text-xl shadow-xl shadow-primary/25 rounded-3xl"
                 >
-                  <LifeBuoy className="w-8 h-8 mr-3" />
-                  Transition Help
+                  <Sparkles className="w-7 h-7 mr-3" />
+                  Get Help Right Now
                 </Button>
               </Link>
 
-              {/* Need more help? */}
-              <div className="w-full mt-2">
-                {!crisisAskOpen ? (
-                  <button
-                    onClick={() => setCrisisAskOpen(true)}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary border border-border rounded-full px-5 py-2.5 bg-card/60 hover:border-primary/40 transition"
-                  >
-                    <HelpCircle className="w-4 h-4" />
-                    Need more help?
-                  </button>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-left"
-                  >
-                    <AskAtlas variant="compact" />
-                  </motion.div>
-                )}
-              </div>
+              {/* Secondary: transition help */}
+              <Link href="/help" className="w-full block">
+                <Button
+                  size="xl"
+                  variant="outline"
+                  className="w-full border-2 border-border bg-card hover:border-primary/40"
+                >
+                  <LifeBuoy className="w-5 h-5 mr-2" />
+                  Transition Help Steps
+                </Button>
+              </Link>
+
+              {/* What works library */}
+              <Link href="/what-works" className="w-full block">
+                <button className="w-full inline-flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary border border-border rounded-2xl px-5 py-3.5 bg-card/60 hover:border-primary/40 transition">
+                  <BookOpen className="w-4 h-4" />
+                  Review what worked before
+                </button>
+              </Link>
             </motion.div>
           ) : (
             /* ── CALM MODE ── */

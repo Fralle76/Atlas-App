@@ -13,6 +13,8 @@ import Onboarding, { hasCompletedOnboarding } from "@/pages/onboarding";
 import Schedule from "@/pages/schedule";
 import ScheduleEdit from "@/pages/schedule-edit";
 import SchedulePreview from "@/pages/schedule-preview";
+import Crisis from "@/pages/crisis";
+import WhatWorks from "@/pages/what-works";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +35,8 @@ function Router() {
       <Route path="/schedule/new" component={ScheduleEdit} />
       <Route path="/schedule/edit/:id" component={ScheduleEdit} />
       <Route path="/schedule/preview/:id" component={SchedulePreview} />
+      <Route path="/crisis" component={Crisis} />
+      <Route path="/what-works" component={WhatWorks} />
       <Route component={NotFound} />
     </Switch>
   );
