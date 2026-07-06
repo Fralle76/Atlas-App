@@ -1,7 +1,7 @@
 import { Router, type IRouter } from "express";
 import { db } from "@workspace/db";
 import { transitionsTable, insertTransitionSchema } from "@workspace/db/schema";
-import { CreateTransitionBody, ListTransitionsResponse } from "@workspace/api-zod";
+import { CreateTransitionBodySchema, ListTransitionsResponse } from "@workspace/api-zod";
 import { desc } from "drizzle-orm";
 
 const router: IRouter = Router();
@@ -16,7 +16,7 @@ router.get("/transitions", async (_req, res) => {
 });
 
 router.post("/transitions", async (req, res) => {
-  const body = CreateTransitionBody.parse(req.body);
+  const body = CreateTransitionBodySchema.parse(req.body);
   const validated = insertTransitionSchema.parse(body);
   const [row] = await db.insert(transitionsTable).values(validated).returning();
   res.status(201).json(row);
